@@ -78,8 +78,6 @@ docker run --rm ${image} generate docker \
   --install tcsh bc tar libgomp1 perl-modules wget curl \
     libsm-dev libx11-dev libxt-dev libxext-dev libglu1-mesa libpython2.7-stdlib\
   --freesurfer version=7.4.1 install_path=/opt/freesurfer \
-  --run-bash "curl -sSL https://raw.githubusercontent.com/AndysWorth/recon-all-v7.1.1-parallel-patch/d4e0ae88db93abf0c2b5df173cab2adc439b65ca/parallel.patch | patch /opt/freesurfer/bin/recon-all " \
-  --run-bash "curl -sSL https://raw.githubusercontent.com/AndysWorth/recon-all-v7.1.1-parallel-patch/e6a5c8153e2349e5762370ff4c20effe85f0ec6e/quantifyThalamicNuclei.patch | patch /opt/freesurfer/bin/quantifyThalamicNuclei.sh" \
   --miniconda version=latest env_name=base conda_install="python=3 pip pandas setuptools pandas=0.21.0" pip_install="nibabel" \
   --run-bash 'curl -sL https://deb.nodesource.com/setup_6.x | bash -' \
   --install nodejs \
@@ -143,8 +141,6 @@ docker run --rm ${image} generate singularity \
   --install tcsh bc tar libgomp1 perl-modules wget curl \
     libsm-dev libx11-dev libxt-dev libxext-dev libglu1-mesa libpython2.7-stdlib\
   --freesurfer version=7.4.1 install_path=/opt/freesurfer \
-  --run-bash "curl -sSL https://raw.githubusercontent.com/AndysWorth/recon-all-v7.1.1-parallel-patch/d4e0ae88db93abf0c2b5df173cab2adc439b65ca/parallel.patch | patch /opt/freesurfer/bin/recon-all " \
-  --run-bash "curl -sSL https://raw.githubusercontent.com/AndysWorth/recon-all-v7.1.1-parallel-patch/e6a5c8153e2349e5762370ff4c20effe85f0ec6e/quantifyThalamicNuclei.patch | patch /opt/freesurfer/bin/quantifyThalamicNuclei.sh" \
   --miniconda version=latest env_name=base conda_install="python=3 pip pandas setuptools pandas=0.21.0" pip_install="nibabel" \
   --run-bash 'curl -sL https://deb.nodesource.com/setup_6.x | bash -' \
   --install nodejs \
