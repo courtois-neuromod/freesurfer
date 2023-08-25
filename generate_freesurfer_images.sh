@@ -39,16 +39,16 @@
 #
 ###############################################################################
 
-image="repronim/neurodocker@sha256:291c40c8efce92260822b6ef40f88c300d77d09f08d577f55c46ef7c4b43d2e5"
+image="repronim/neurodocker@sha256:5b80804139b317e6180ae0b0de39aeff5731b27b224e6af4d1b46e040e4785a7"
 
 # Generate a dockerfile for building BIDS-Apps Freesurfer container
 docker run --rm ${image} generate docker \
-  --base ubuntu:xenial \
+  --base-image ubuntu:jammy \
   --pkg-manager apt \
   --install tcsh bc tar libgomp1 perl-modules wget curl \
     libsm-dev libx11-dev libxt-dev libxext-dev libglu1-mesa libpython2.7-stdlib\
   --freesurfer version=6.0.1 install_path=/opt/freesurfer \
-  --miniconda use_env=base conda_install="python=3 pip pandas setuptools pandas=0.21.0" pip_install="nibabel" \
+  --miniconda version=latest env_name=base conda_install="python=3 pip pandas setuptools pandas=0.21.0" pip_install="nibabel" \
   --run-bash 'curl -sL https://deb.nodesource.com/setup_6.x | bash -' \
   --install nodejs \
   --run-bash 'npm install -g bids-validator@0.19.8' \
@@ -73,12 +73,14 @@ docker run --rm ${image} generate docker \
 > Dockerfile
 
 docker run --rm ${image} generate docker \
-  --base ubuntu:xenial \
+  --base-image ubuntu:jammy \
   --pkg-manager apt \
   --install tcsh bc tar libgomp1 perl-modules wget curl \
     libsm-dev libx11-dev libxt-dev libxext-dev libglu1-mesa libpython2.7-stdlib\
-  --freesurfer version=7.1.1 install_path=/opt/freesurfer \
-  --miniconda use_env=base conda_install="python=3 pip pandas setuptools pandas=0.21.0" pip_install="nibabel" \
+  --freesurfer version=7.4.1 install_path=/opt/freesurfer \
+  --run-bash "curl -sSL https://raw.githubusercontent.com/AndysWorth/recon-all-v7.1.1-parallel-patch/d4e0ae88db93abf0c2b5df173cab2adc439b65ca/parallel.patch | patch /opt/freesurfer/bin/recon-all " \
+  --run-bash "curl -sSL https://raw.githubusercontent.com/AndysWorth/recon-all-v7.1.1-parallel-patch/e6a5c8153e2349e5762370ff4c20effe85f0ec6e/quantifyThalamicNuclei.patch | patch /opt/freesurfer/bin/quantifyThalamicNuclei.sh" \
+  --miniconda version=latest env_name=base conda_install="python=3 pip pandas setuptools pandas=0.21.0" pip_install="nibabel" \
   --run-bash 'curl -sL https://deb.nodesource.com/setup_6.x | bash -' \
   --install nodejs \
   --run-bash 'npm install -g bids-validator@0.19.8' \
@@ -105,12 +107,12 @@ docker run --rm ${image} generate docker \
 
 # Generate a singularity recipe for building BIDS-Apps Freesurfer container
 docker run --rm ${image} generate singularity \
-  --base ubuntu:xenial \
+  --base-image ubuntu:jammy \
   --pkg-manager apt \
   --install tcsh bc tar libgomp1 perl-modules wget curl \
     libsm-dev libx11-dev libxt-dev libxext-dev libglu1-mesa libpython2.7-stdlib\
   --freesurfer version=6.0.1 install_path=/opt/freesurfer \
-  --miniconda use_env=base conda_install="python=3 pip pandas setuptools pandas=0.21.0" pip_install="nibabel" \
+  --miniconda version=latest env_name=base conda_install="python=3 pip pandas setuptools pandas=0.21.0" pip_install="nibabel" \
   --run-bash 'curl -sL https://deb.nodesource.com/setup_6.x | bash -' \
   --install nodejs \
   --run-bash 'npm install -g bids-validator@0.19.8' \
@@ -136,12 +138,14 @@ docker run --rm ${image} generate singularity \
 
 
 docker run --rm ${image} generate singularity \
-  --base ubuntu:xenial \
+  --base-image ubuntu:jammy \
   --pkg-manager apt \
   --install tcsh bc tar libgomp1 perl-modules wget curl \
     libsm-dev libx11-dev libxt-dev libxext-dev libglu1-mesa libpython2.7-stdlib\
-  --freesurfer version=7.1.1 install_path=/opt/freesurfer \
-  --miniconda use_env=base conda_install="python=3 pip pandas setuptools pandas=0.21.0" pip_install="nibabel" \
+  --freesurfer version=7.4.1 install_path=/opt/freesurfer \
+  --run-bash "curl -sSL https://raw.githubusercontent.com/AndysWorth/recon-all-v7.1.1-parallel-patch/d4e0ae88db93abf0c2b5df173cab2adc439b65ca/parallel.patch | patch /opt/freesurfer/bin/recon-all " \
+  --run-bash "curl -sSL https://raw.githubusercontent.com/AndysWorth/recon-all-v7.1.1-parallel-patch/e6a5c8153e2349e5762370ff4c20effe85f0ec6e/quantifyThalamicNuclei.patch | patch /opt/freesurfer/bin/quantifyThalamicNuclei.sh" \
+  --miniconda version=latest env_name=base conda_install="python=3 pip pandas setuptools pandas=0.21.0" pip_install="nibabel" \
   --run-bash 'curl -sL https://deb.nodesource.com/setup_6.x | bash -' \
   --install nodejs \
   --run-bash 'npm install -g bids-validator@0.19.8' \
